@@ -97,7 +97,8 @@
   };
 
   MaterialSelectfield.prototype.update_ = function () {
-    var itemSelected = false;
+    var itemSelected = false,
+      selectedEl;
 
     if(this.options_ && this.options_.length > 0) {
       for (var i = 0; i < this.options_.length; i++) {
@@ -105,7 +106,12 @@
         if (item.selected && item.value !== "") {
           itemSelected = true;
           this.element_.classList.add(this.CssClasses_.IS_DIRTY);
-          this.listOptionBox_.querySelector('.' + this.CssClasses_.IS_SELECTED).classList.remove(this.CssClasses_.IS_SELECTED);
+          selectedEl = this.listOptionBox_.querySelector('.' + this.CssClasses_.IS_SELECTED);
+
+          if (selectedEl) {
+            selectedEl.classList.remove(this.CssClasses_.IS_SELECTED);
+          }
+
           this.listOptionBox_.querySelectorAll('LI')[i].classList.add(this.CssClasses_.IS_SELECTED);
         }
       }
@@ -477,7 +483,7 @@
   MaterialSelectfield.prototype['mdlDowngrade'] =
     MaterialSelectfield.prototype.mdlDowngrade;
 
-  MaterialSelectfield.prototype.change_ = function (value) {
+  MaterialSelectfield.prototype.change_ = function (value, trigger) {
     var option = null;
 
     for (var i = 0; i < this.options_.length; i++) {
@@ -493,7 +499,10 @@
     option.selected = true;
 
     this.update_();
-    this.fireEventChange_();
+
+    if (trigger !== false) {
+      this.fireEventChange_();
+    }
   };
 
   /**
