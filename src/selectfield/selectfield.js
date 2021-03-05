@@ -421,7 +421,7 @@
         for (var i = 0; i < this.options_.length; i++) {
           var item = this.options_[i]
             ,itemText = (item.textContent || '').toUpperCase().replace(/( )|(\n)/g, "")
-            ,liClass = ''
+            ,liClass = item.className || '';
             ;
 
           this.optionsMap_[itemText] = i;
