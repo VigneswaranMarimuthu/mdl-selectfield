@@ -25,7 +25,7 @@
   ];
 
   gulp.task('sass', function () {
-    gulp
+    return gulp
       .src(sassFiles)
       .pipe(bulkSass())
       .pipe(sourcemaps.init())
@@ -80,9 +80,9 @@
     watch();
   });
 
-  gulp.task('build', ['sass', 'uglify']);
+  gulp.task('build', gulp.parallel('sass', 'uglify'));
 
   // The default task (called when you run `gulp` from cli)
-  gulp.task('default', ['watch']);
+  gulp.task('default', gulp.series('watch'));
 
 })();
